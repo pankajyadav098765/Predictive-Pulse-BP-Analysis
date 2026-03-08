@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predictive Pulse | BP Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .nav-blue { background: #1a237e; color: white; padding: 15px; }
+        .card-header { font-weight: bold; color: #1a237e; background: white; border: none; }
+        .sidebar-box { background: #f0f2f5; border-radius: 10px; font-size: 0.85rem; }
+        .form-label { font-weight: 600; font-size: 0.85rem; color: #555; }
+        .result-box { border-left: 8px solid; border-radius: 12px; }
+    </style>
+</head>
+<body class="bg-light">
+
+<nav class="nav-blue shadow-sm mb-4">
+    <div class="container d-flex justify-content-between">
+        <h4 class="m-0">🩺 Hypertension Detection</h4>
+        <span class="badge bg-primary">AI-POWERED ASSESSMENT</span>
+    </div>
+</nav>
+
+<div class="container pb-5">
+    <div class="row g-4">
+        <div class="col-lg-9">
+            <div class="card shadow-sm border-0 p-4">
+                <h5 class="card-header px-0 mb-4">2. Patient Data Input Form</h5>
+                <form action="/predict" method="POST">
+                    <div class="row g-3">
+                        <div class="col-md-4"><label class="form-label">Gender</label>
+                            <select name="gender" class="form-select"><option>Male</option><option>Female</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Age Group</label>
+                            <select name="age_group" class="form-select"><option value="1">18-34 years</option><option value="2">35-50 years</option><option value="3">50+ years</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Family History?</label>
+                            <select name="family_history" class="form-select"><option>No</option><option>Yes</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Under Medical Care?</label>
+                            <select name="medical_care" class="form-select"><option>No</option><option>Yes</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Taking BP Medication?</label>
+                            <select name="bp_meds" class="form-select"><option>No</option><option>Yes</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Symptom Severity</label>
+                            <select name="symptom_severity" class="form-select"><option value="0">None</option><option value="1">Mild</option><option value="2">Severe</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Shortness of Breath?</label>
+                            <select name="shortness_breath" class="form-select"><option>No</option><option>Yes</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Vision Changes?</label>
+                            <select name="vision_changes" class="form-select"><option>No</option><option>Yes</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Frequent Nosebleeds?</label>
+                            <select name="nosebleeds" class="form-select"><option>No</option><option>Yes</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Heart-Healthy Diet?</label>
+                            <select name="healthy_diet" class="form-select"><option>Yes</option><option>No</option></select></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-4 py-2 fw-bold">GENERATE RISK ASSESSMENT</button>
+                </form>
+            </div>
+
+            {% if stage %}
+            <div id="results" class="card mt-4 p-4 shadow-sm result-box border-{{color}}">
+                <h3 class="text-{{color}}">{{ stage }}</h3>
+                <p class="mb-1"><strong>AI Predicted Reading:</strong> {{ sys }} / {{ dia }} mmHg</p>
+                <p class="mb-0"><strong>Recommendation:</strong> {{ advice }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-3">
+            <div class="sidebar-box p-3 shadow-sm mb-4">
+                <h6 class="text-primary mb-3">💙 Blood Pressure Guidelines</h6>
+                <div class="d-flex justify-content-between mb-1"><span>Normal</span> <span class="text-success">&lt;120/80</span></div>
+                <div class="d-flex justify-content-between mb-1"><span>Elevated</span> <span class="text-info">120-129/&lt;80</span></div>
+                <div class="d-flex justify-content-between mb-1"><span>Stage 1</span> <span class="text-warning">130-139/80-89</span></div>
+                <div class="d-flex justify-content-between mb-1"><span>Stage 2</span> <span class="text-danger">≥140/≥90</span></div>
+                <div class="d-flex justify-content-between"><span>Crisis</span> <span class="badge bg-danger">≥180/≥120</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
