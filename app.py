@@ -42,5 +42,10 @@ def predict():
 
     return render_template('index.html', stage=stage, color=color, advice=advice, sys=sys, dia=dia, scroll="results")
 
+import os
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get("PORT", 5000))
+    # Standard Flask run, but host MUST be 0.0.0.0 for Render
+    app.run(host='0.0.0.0', port=port)
